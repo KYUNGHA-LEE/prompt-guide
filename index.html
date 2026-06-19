@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>📋 프롬프트 가이드</title>
+<style>
+  :root{
+    --bg:#0e1424; --card:#161e33; --line:#26304d; --ink:#eef2ff; --mut:#93a0c4;
+    --accent:#5b8cff; --accent2:#7c5cff; --good:#33d69f; --warn:#ffd43b;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    background:radial-gradient(1200px 700px at 70% -10%, #1c2747 0%, var(--bg) 60%);
+    color:var(--ink); font-family:"Pretendard","Segoe UI",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; min-height:100%;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:24px 18px 80px}
+  h1{font-size:24px;margin:0 0 4px}
+  .sub{color:var(--mut);font-size:14px;margin:0 0 24px}
+  .hidden{display:none!important}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:14px 0;
+    box-shadow:0 10px 30px rgba(0,0,0,.25)}
+  button{font-family:inherit;cursor:pointer;border:none;border-radius:14px;font-weight:700}
+  .btn-lg{font-size:18px;padding:18px 22px;width:100%;color:#fff;
+    background:linear-gradient(135deg,var(--accent),var(--accent2))}
+  .btn-lg:disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.3)}
+  .btn-ghost{background:#222c47;color:var(--ink);border:1px solid var(--line);font-size:15px;padding:14px 18px}
+  .row{display:flex;gap:12px;flex-wrap:wrap}
+  .row>*{flex:1;min-width:0}
+  input{font-family:inherit;font-size:18px;padding:14px 16px;border-radius:12px;border:1px solid var(--line);
+    background:#0e1730;color:var(--ink);width:100%}
+  input::placeholder{color:#5e6c92}
+  .muted{color:var(--mut)}
+  .pill{display:inline-block;background:#0e1730;border:1px solid var(--line);border-radius:999px;
+    padding:6px 14px;font-weight:800;letter-spacing:3px;font-size:22px}
+  .code-big{font-size:44px;letter-spacing:8px;font-weight:900;color:#fff}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .part-btn{background:#1b2440;border:1px solid var(--line);color:var(--mut);padding:10px 14px;border-radius:12px;font-size:14px}
+  .part-btn.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-color:transparent}
+  /* 프롬프트 무대 */
+  .stage{background:#0b1126;border:1px solid var(--line);border-radius:16px;padding:20px;min-height:120px}
+  .grow-line{font-size:19px;line-height:1.55;padding:10px 12px;border-radius:10px;margin:6px 0;
+    display:flex;gap:8px;align-items:flex-start}
+  .grow-line.base{font-weight:800;background:#13203f}
+  .grow-line .plus{color:var(--accent);font-weight:900}
+  .grow-line.new{animation:slidein .5s ease;background:rgba(51,214,159,.14);outline:1px solid rgba(51,214,159,.5)}
+  @keyframes slidein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .st-student .grow-line{font-size:22px}
+  .meta{display:flex;justify-content:space-between;align-items:center;margin:10px 2px;color:var(--mut);font-size:14px}
+  .big-num{font-size:18px;font-weight:900;color:var(--good)}
+  .controls{display:flex;gap:10px;margin-top:16px}
+  .controls .btn-lg{flex:2}
+  .controls .btn-ghost{flex:1}
+  .hint{color:var(--warn);font-size:13px;margin-top:8px;min-height:18px}
+  .qr{background:#fff;border-radius:12px;padding:8px;width:160px;height:160px}
+  .joinbox{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+  .err{background:#3a1320;border:1px solid #6b2233;color:#ffb3c0;padding:12px 14px;border-radius:12px;font-size:14px;margin-top:12px}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#0b1126;border:1px solid var(--line);
+    color:#fff;padding:12px 20px;border-radius:999px;font-weight:700;display:none;z-index:50}
+  .footer-link{margin-top:30px;text-align:center}
+  .footer-link a{color:var(--mut);font-size:13px;text-decoration:none;border-bottom:1px dotted var(--mut)}
+  a.copy-cur{display:block;text-align:center;margin-top:16px}
+  .saved-row{display:flex;gap:8px;margin:8px 0;align-items:stretch}
+  .saved-open{flex:1;text-align:left;background:#1b2440;border:1px solid var(--line);color:var(--ink);
+    padding:14px 16px;border-radius:12px;font-size:16px;font-weight:700}
+  .saved-open .muted{font-weight:500;letter-spacing:2px}
+  .saved-del{flex:0 0 auto;width:48px;background:#241622;border:1px solid #4a2330;color:#ffb3c0;border-radius:12px;font-size:16px}
+  .roster{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .chip{background:#1b2440;border:1px solid var(--line);color:var(--mut);padding:6px 12px;border-radius:999px;font-size:14px;font-weight:600}
+  .chip.done{background:rgba(51,214,159,.16);border-color:rgba(51,214,159,.5);color:#9ef0cf}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===== 로딩 ===== -->
+  <div id="loading" class="card"><p class="muted">연결 중…</p></div>
+
+  <!-- ===== 1. 역할 선택 ===== -->
+  <div id="home" class="hidden">
+    <h1>📋 프롬프트 가이드</h1>
+    <p class="sub">선생님이 프롬프트를 한 줄씩 공개하면, 학생 화면에 실시간으로 따라 나타납니다.</p>
+    <div class="card">
+      <p style="margin:0 0 10px;font-weight:700">➕ 새 수업 보드 만들기</p>
+      <div class="row">
+        <input id="boardName" placeholder="보드 이름 (예: 6/19 1반)" maxlength="30" />
+        <button id="createBtn" class="btn-lg" style="flex:0 0 auto;padding:14px 28px">만들기</button>
+      </div>
+    </div>
+    <div class="card hidden" id="savedCard">
+      <p style="margin:0 0 10px;font-weight:700">📂 저장된 보드 — 눌러서 다시 사용</p>
+      <div id="savedList"></div>
+    </div>
+    <div class="card">
+      <p style="margin:0 0 10px;font-weight:700">🧑‍🎓 학생이라면 — 코드 입력</p>
+      <div class="row">
+        <input id="joinCode" placeholder="예: ABCD12" maxlength="6" style="text-transform:uppercase" />
+        <button id="goStudent" class="btn-ghost" style="flex:0 0 auto;padding:14px 24px">참여</button>
+      </div>
+    </div>
+    <div id="homeErr" class="err hidden"></div>
+  </div>
+
+  <!-- ===== 2. 선생님 ===== -->
+  <div id="teacher" class="hidden">
+    <h1 id="tHeading">👩‍🏫 선생님 화면</h1>
+    <div class="card">
+      <div class="joinbox">
+        <img id="qr" class="qr" alt="QR" />
+        <div style="flex:1;min-width:200px">
+          <p class="muted" style="margin:0 0 6px">학생 입장 코드</p>
+          <div class="code-big" id="codeBig">––––––</div>
+          <div class="row" style="margin-top:12px">
+            <button id="copyLink" class="btn-ghost">🔗 링크 복사</button>
+            <a id="openStudent" class="btn-ghost" style="text-align:center;text-decoration:none;line-height:1.4" target="_blank">학생 화면 열기 ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="tabs" id="partTabs"></div>
+      <div class="meta">
+        <span id="stageTitle">파트를 선택하세요</span>
+        <span><span class="big-num" id="progress"></span></span>
+      </div>
+      <div class="stage stage-teacher" id="stageT">
+        <p class="muted">위에서 파트를 고르면 학생 화면에 기본 프롬프트가 뜹니다.</p>
+      </div>
+      <div class="hint" id="hint"></div>
+      <div class="controls" id="controls" style="visibility:hidden">
+        <button id="growBtn" class="btn-lg">다음 살 붙이기 ▶</button>
+        <button id="shrinkBtn" class="btn-ghost">◀ 한 줄 되돌리기</button>
+      </div>
+      <div class="meta" style="margin-top:14px">
+        <span class="muted">접속 학생 <b id="ptCount">0</b>명</span>
+        <span class="muted">따라옴 <b class="big-num" id="ackCount">0</b>명</span>
+      </div>
+      <div id="roster" class="roster"></div>
+    </div>
+    <div id="tErr" class="err hidden"></div>
+  </div>
+
+  <!-- ===== 3a. 학생 — 이름 입력 ===== -->
+  <div id="sJoin" class="hidden">
+    <h1>🧑‍🎓 입장하기</h1>
+    <p class="sub">참여 코드 <span class="pill" id="sJoinCode" style="font-size:16px"></span></p>
+    <div class="card">
+      <p style="margin:0 0 10px;font-weight:700">이름을 입력하고 입장하세요</p>
+      <input id="sName" placeholder="이름 (예: 김민수)" maxlength="20" />
+      <div class="row" style="margin-top:12px">
+        <button id="sEnterNamed" class="btn-lg">입장</button>
+        <button id="sEnterAnon" class="btn-ghost" style="flex:0 0 auto;padding:14px 20px">익명으로 입장</button>
+      </div>
+    </div>
+    <div id="sJoinErr" class="err hidden"></div>
+  </div>
+
+  <!-- ===== 3b. 학생 — 보드 ===== -->
+  <div id="student" class="hidden">
+    <div class="meta">
+      <span class="muted">참여 코드 <span class="pill" id="sCode" style="font-size:16px"></span></span>
+      <span class="muted" id="sProgress"></span>
+    </div>
+    <div class="card">
+      <div class="meta"><span id="sTitle" style="font-weight:800">대기 중…</span></div>
+      <div class="stage stage-student stStudent" id="stageS">
+        <p class="muted">선생님이 시작하면 여기에 프롬프트가 나타납니다.</p>
+      </div>
+      <a class="copy-cur"><button id="copyCur" class="btn-lg">📋 지금 프롬프트 복사</button></a>
+      <button id="ackBtn" class="btn-ghost" style="width:100%;margin-top:10px">✅ 여기까지 따라왔어요</button>
+    </div>
+    <div id="sErr" class="err hidden"></div>
+  </div>
+
+  <div class="footer-link"><a href="?">↺ 처음 화면으로</a></div>
+</div>
+<div id="toast" class="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getDatabase, ref, set, get, update, remove, onValue, onDisconnect, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+// ── 라이브폴과 같은 Firebase 프로젝트 재사용 (공개되어도 되는 값) ──
+const firebaseConfig = {
+  apiKey: "AIzaSyDxobMcpnBAMlcLeSILBR2k4sGoKxASk30",
+  authDomain: "live-poll-c643b.firebaseapp.com",
+  databaseURL: "https://live-poll-c643b-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "live-poll-c643b",
+  storageBucket: "live-poll-c643b.firebasestorage.app",
+  messagingSenderId: "445248033842",
+  appId: "1:445248033842:web:af51f031d206840281582b",
+};
+
+// ── 수업 프롬프트 데이터 ── base(기본) + adds(붙이는 살)
+const PARTS = [
+  {
+    id: "pick", title: "수업툴 · 이름 뽑기", emoji: "🎯",
+    base: "버튼을 누르면 우리 반 학생 중 한 명을 랜덤으로 뽑아주는 페이지 만들어줘.\nHTML 파일 하나로 만들어줘.",
+    adds: [
+      { label: "이름 입력", line: "학생 이름을 내가 직접 입력해서 추가하고 지울 수 있게 해줘." },
+      { label: "여러 명 붙여넣기", line: "이름을 한 명씩 말고, 여러 명을 한 번에 붙여넣어서 등록할 수 있게 해줘. 엑셀에서 복사한 것도 되게 해줘." },
+      { label: "두구두구 효과", line: "뽑을 때 이름들이 빠르게 휙휙 바뀌다가 멈추는 두구두구 효과를 넣어줘." },
+      { label: "중복 제외+목록", line: "한 번 뽑힌 학생은 다시 안 뽑히게 하고, 누가 뽑혔는지 목록으로 보여줘." },
+      { label: "예쁘게+TV용", line: "색깔이랑 글씨를 예쁘고 크게 해서, 교실 TV 화면에 띄워도 뒤에서 잘 보이게 해줘." },
+      { label: "초기화 버튼", line: "뽑힌 학생을 다시 후보로 되돌리는 '초기화' 버튼을 넣어줘." },
+    ],
+  },
+  {
+    id: "quiz", title: "게임 · OX 퀴즈", emoji: "🎮",
+    base: "O 또는 X로 답하는 퀴즈 웹페이지를 만들어줘.\n문제 하나를 보여주고, O 버튼과 X 버튼을 누르면 정답인지 알려줘.\nHTML 파일 하나로 만들어줘.",
+    adds: [
+      { label: "문제 여러 개", line: "문제를 여러 개 풀 수 있게 하고, 한 문제를 풀면 다음 문제로 넘어가게 해줘." },
+      { label: "점수 세기", line: "맞힌 개수를 점수로 세어서, 마지막엔 '몇 점 중 몇 점'처럼 결과를 보여줘." },
+      { label: "내 문제+색", line: "문제와 정답을 내가 직접 입력할 수 있게 하고, 정답이면 초록색, 틀리면 빨간색으로 표시해줘." },
+      { label: "효과+다시풀기", line: "정답을 맞히면 축하 효과(색종이나 이모지), 틀리면 화면이 살짝 흔들리게 하고, 끝나면 '다시 풀기' 버튼을 만들어줘." },
+    ],
+  },
+  {
+    id: "card", title: "수업양식 · 암기 카드", emoji: "🗂️",
+    base: "클릭하면 앞뒤가 뒤집히는 단어 카드 웹페이지를 만들어줘.\n앞면엔 단어, 뒷면엔 뜻이 나오게 해줘.\nHTML 파일 하나로 만들어줘.",
+    adds: [
+      { label: "여러 장+진도", line: "카드를 여러 장 만들어서 '다음' 버튼으로 넘기고, 지금 몇 번째인지(예: 3 / 10) 보여줘." },
+      { label: "내 내용 입력", line: "카드의 앞면(단어)과 뒷면(뜻)을 내가 직접 입력할 수 있게 해줘." },
+      { label: "부드러운 뒤집기", line: "카드를 예쁘게 꾸미고, 클릭하면 부드럽게 회전하며 뒤집히는 효과를 넣어줘." },
+      { label: "섞기+외움표시", line: "카드 순서를 섞는 '섞기' 버튼을 넣고, 다 외운 카드는 '외웠어요'로 표시해 몇 장 외웠는지 보여줘." },
+    ],
+  },
+];
+const PART_BY_ID = Object.fromEntries(PARTS.map(p => [p.id, p]));
+const segCount = p => 1 + p.adds.length;
+function linesFor(part, count){
+  const lines = [part.base];
+  for (let i = 0; i < count - 1 && i < part.adds.length; i++) lines.push(part.adds[i].line);
+  return lines;
+}
+function textFor(part, count){
+  const [base, ...extra] = linesFor(part, count);
+  return extra.length ? base + "\n" + extra.map(l => "- " + l).join("\n") : base;
+}
+
+// ── 유틸 ──
+const $ = id => document.getElementById(id);
+const show = id => $(id).classList.remove("hidden");
+const hide = id => $(id).classList.add("hidden");
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+let toastTimer;
+function toast(m){ const t=$("toast"); t.textContent=m; t.style.display="block"; clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.style.display="none",1700); }
+function makeCode(){ const c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; let s=""; for(let i=0;i<6;i++) s+=c[Math.floor(Math.random()*c.length)]; return s; }
+
+// ── Firebase 부팅 ──
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+let uid = null;
+
+function fail(boxId, msg){ const e=$(boxId); e.textContent=msg; e.classList.remove("hidden"); }
+
+onAuthStateChanged(auth, u => { if (u){ uid = u.uid; route(); } });
+signInAnonymously(auth).catch(e => {
+  hide("loading"); show("home");
+  fail("homeErr", "로그인 실패: Firebase 콘솔에서 '익명 로그인'이 켜져 있는지, 이 주소가 승인된 도메인인지 확인하세요. (" + e.message + ")");
+});
+
+// ── 라우팅 ──
+function route(){
+  hide("loading");
+  const q = new URLSearchParams(location.search);
+  const board = (q.get("board") || "").toUpperCase();
+  if (q.get("role") === "student" && board) return startStudent(board);
+  show("home");
+  renderSaved();
+  $("createBtn").onclick = createBoard;
+  $("boardName").addEventListener("keydown", e => { if (e.key === "Enter") createBoard(); });
+  $("goStudent").onclick = () => {
+    const c = $("joinCode").value.trim().toUpperCase();
+    if (c.length < 4) return fail("homeErr", "코드를 다시 확인해주세요.");
+    location.search = "?role=student&board=" + c;
+  };
+  $("joinCode").addEventListener("keydown", e => { if (e.key === "Enter") $("goStudent").click(); });
+}
+
+// ── 저장된 보드 (이 컴퓨터에 저장) ──
+function loadBoards(){ try { return JSON.parse(localStorage.getItem("pg_boards") || "[]"); } catch { return []; } }
+function saveBoards(arr){ localStorage.setItem("pg_boards", JSON.stringify(arr)); }
+function renderSaved(){
+  const list = loadBoards();
+  if (!list.length){ hide("savedCard"); return; }
+  show("savedCard");
+  const box = $("savedList"); box.innerHTML = "";
+  list.slice().reverse().forEach(b => {
+    const row = document.createElement("div"); row.className = "saved-row";
+    const open = document.createElement("button"); open.className = "saved-open";
+    open.innerHTML = `${esc(b.name)} <span class="muted">· ${b.code}</span>`;
+    open.onclick = () => openTeacher(b.code, b.name);
+    const del = document.createElement("button"); del.className = "saved-del"; del.textContent = "✕"; del.title = "삭제";
+    del.onclick = () => { saveBoards(loadBoards().filter(x => x.code !== b.code)); renderSaved(); };
+    row.append(open, del); box.appendChild(row);
+  });
+}
+
+// ════════ 선생님 ════════
+async function createBoard(){
+  const name = ($("boardName").value || "").trim() || "이름 없는 보드";
+  hide("home");
+  let code;
+  try {
+    for (let i=0;i<8;i++){ const c=makeCode(); const s=await get(ref(db,`boards/${c}/meta`));
+      if (s.exists()) continue; await set(ref(db,`boards/${c}/meta`),{hostId:uid,createdAt:serverTimestamp()}); code=c; break; }
+  } catch (e) {
+    show("home");
+    if (e.code === "PERMISSION_DENIED" || /permission/i.test(e.message))
+      return fail("homeErr","Firebase 보안 규칙이 아직 게시되지 않았어요. database.rules.json을 Firebase 콘솔 → Realtime Database → 규칙에 붙여넣고 '게시'하세요.");
+    return fail("homeErr","보드 생성 실패: " + e.message);
+  }
+  if (!code) return (show("home"), fail("homeErr","보드 생성 실패. 잠시 후 다시 시도해주세요."));
+  const list = loadBoards(); list.push({ code, name, ts: Date.now() }); saveBoards(list);
+  openTeacher(code, name);
+}
+
+function openTeacher(code, name){
+  hide("home");
+  show("teacher");
+  $("tHeading").textContent = "👩‍🏫 " + (name || "선생님 화면");
+
+  const url = location.origin + location.pathname + "?role=student&board=" + code;
+  $("codeBig").textContent = code;
+  $("openStudent").href = url;
+  $("qr").src = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(url);
+  $("copyLink").onclick = async () => { try{ await navigator.clipboard.writeText(url);}catch{} toast("학생 링크가 복사됐어요!"); };
+
+  // 파트 탭
+  const tabs = $("partTabs"); tabs.innerHTML="";
+  PARTS.forEach(p => { const b=document.createElement("button"); b.className="part-btn"; b.dataset.part=p.id;
+    b.textContent = `${p.emoji} ${p.title}`; b.onclick = () => set(ref(db,`boards/${code}/live`),{part:p.id,count:1}); tabs.appendChild(b); });
+
+  let live = null, acks = {}, people = {};   // people = { uid: {name, ts} }
+  $("growBtn").onclick = () => { if(!live) return; const part=PART_BY_ID[live.part];
+    if (live.count >= segCount(part)) return; update(ref(db,`boards/${code}/live`),{count:live.count+1}); };
+  $("shrinkBtn").onclick = () => { if(!live||live.count<=1) return; update(ref(db,`boards/${code}/live`),{count:live.count-1}); };
+
+  onValue(ref(db,`boards/${code}/live`), s => { live = s.val()||null; renderT(); renderRoster(); });
+  onValue(ref(db,`boards/${code}/participants`), s => { people = s.val()||{}; renderRoster(); });
+  onValue(ref(db,`boards/${code}/done`), s => { acks = s.val()||{}; renderRoster(); });
+
+  function renderT(){
+    document.querySelectorAll(".part-btn").forEach(b => b.classList.toggle("active", live && b.dataset.part===live.part));
+    if (!live){ $("stageTitle").textContent="파트를 선택하세요"; $("progress").textContent=""; $("hint").textContent="";
+      $("controls").style.visibility="hidden"; $("stageT").innerHTML='<p class="muted">위에서 파트를 고르면 학생 화면에 기본 프롬프트가 뜹니다.</p>'; return; }
+    $("controls").style.visibility="visible";
+    const part=PART_BY_ID[live.part], total=segCount(part);
+    $("stageTitle").textContent=`${part.emoji} ${part.title}`; $("progress").textContent=`${live.count} / ${total}`;
+    $("stageT").innerHTML = renderLines(part, live.count);
+    $("shrinkBtn").disabled = live.count<=1;
+    const end = live.count>=total; $("growBtn").disabled=end;
+    if (end){ $("growBtn").textContent="완성! 🎉"; $("hint").textContent="완성형까지 다 붙였어요."; }
+    else { const nx=part.adds[live.count-1]; $("growBtn").textContent=`다음 살 붙이기 ▶  +${nx.label}`; $("hint").textContent=`다음에 붙을 살: ${nx.label}`; }
+  }
+  function renderRoster(){
+    const ids = Object.keys(people);
+    $("ptCount").textContent = ids.length;
+    const key = live ? `${live.part}:${live.count}` : null;
+    let followed = 0;
+    $("roster").innerHTML = ids.length
+      ? ids.map(u => {
+          const nm = esc(people[u].name || "익명");
+          const done = key && acks[u] === key;
+          if (done) followed++;
+          return `<span class="chip${done?" done":""}">${done?"✓ ":""}${nm}</span>`;
+        }).join("")
+      : '<span class="muted">아직 입장한 학생이 없어요.</span>';
+    $("ackCount").textContent = followed;
+  }
+}
+
+// ════════ 학생 — 이름 입력 ════════
+async function startStudent(code){
+  hide("home"); show("sJoin");
+  $("sJoinCode").textContent = code;
+  try {
+    const meta = await get(ref(db, `boards/${code}/meta`));
+    if (!meta.exists()) return fail("sJoinErr","그런 코드의 보드가 없어요. 코드를 다시 확인해주세요.");
+  } catch (e) {
+    if (e.code === "PERMISSION_DENIED" || /permission/i.test(e.message))
+      return fail("sJoinErr","아직 준비 중인 보드예요. 선생님께 알려주세요. (Firebase 규칙 미게시)");
+    return fail("sJoinErr","입장 확인 실패: " + e.message);
+  }
+  $("sEnterNamed").onclick = () => enterStudent(code, ($("sName").value || "").trim() || "익명");
+  $("sEnterAnon").onclick  = () => enterStudent(code, "익명");
+  $("sName").addEventListener("keydown", e => { if (e.key === "Enter") $("sEnterNamed").click(); });
+}
+
+// ════════ 학생 — 입장 ════════
+async function enterStudent(code, name){
+  hide("sJoin"); show("student");
+  $("sCode").textContent = code;
+
+  // 접속 등록(이름 포함) + 나가면 자동 제거
+  const meRef = ref(db, `boards/${code}/participants/${uid}`);
+  await set(meRef, { name, ts: serverTimestamp() });
+  onDisconnect(meRef).remove();
+
+  let live = null;
+  onValue(ref(db, `boards/${code}/live`), s => { live = s.val()||null; renderS(); });
+
+  $("copyCur").onclick = async () => {
+    if (!live) return toast("아직 시작 전이에요.");
+    const part=PART_BY_ID[live.part];
+    try{ await navigator.clipboard.writeText(textFor(part, live.count)); toast("복사 완료! AI에 붙여넣으세요."); }
+    catch{ toast("복사 실패 — 길게 눌러 직접 복사해주세요."); }
+  };
+  $("ackBtn").onclick = () => { if(!live) return; set(ref(db,`boards/${code}/done/${uid}`), `${live.part}:${live.count}`); toast("따라왔어요! 선생님 화면에 표시됩니다 ✅"); };
+
+  function renderS(){
+    if (!live){ $("sTitle").textContent="대기 중…"; $("sProgress").textContent="";
+      $("stageS").innerHTML='<p class="muted">선생님이 시작하면 여기에 프롬프트가 나타납니다.</p>'; return; }
+    const part=PART_BY_ID[live.part], total=segCount(part);
+    $("sTitle").textContent=`${part.emoji} ${part.title}`; $("sProgress").textContent=`${live.count} / ${total}`;
+    $("stageS").innerHTML = renderLines(part, live.count);
+  }
+}
+
+// 공통: 줄 렌더 (마지막에 붙은 살 강조)
+function renderLines(part, count){
+  const lines = linesFor(part, count);
+  return lines.map((l,i) => {
+    const isNew = i===lines.length-1 && i>0;
+    const cls = "grow-line" + (i===0?" base":"") + (isNew?" new":"");
+    return `<div class="${cls}">${i===0?"":"<span class='plus'>+</span>"}<span>${esc(l)}</span></div>`;
+  }).join("");
+}
+</script>
+</body>
+</html>
