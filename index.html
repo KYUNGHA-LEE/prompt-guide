@@ -7,186 +7,209 @@
 <style>
   :root{
     --bg:#0e1424; --card:#161e33; --line:#26304d; --ink:#eef2ff; --mut:#93a0c4;
-    --accent:#5b8cff; --accent2:#7c5cff; --good:#33d69f; --warn:#ffd43b;
+    --accent:#5b8cff; --accent2:#7c5cff; --good:#33d69f; --danger:#ff6b81;
   }
   *{box-sizing:border-box}
   html,body{margin:0;height:100%}
-  body{
-    background:radial-gradient(1200px 700px at 70% -10%, #1c2747 0%, var(--bg) 60%);
-    color:var(--ink); font-family:"Pretendard","Segoe UI",system-ui,sans-serif;
-    -webkit-font-smoothing:antialiased; min-height:100%;
-  }
-  .wrap{max-width:860px;margin:0 auto;padding:24px 18px 80px}
-  h1{font-size:24px;margin:0 0 4px}
-  .sub{color:var(--mut);font-size:14px;margin:0 0 24px}
+  body{background:radial-gradient(1200px 700px at 70% -10%, #1c2747 0%, var(--bg) 60%);
+    color:var(--ink); font-family:"Pretendard","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100%}
   .hidden{display:none!important}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:14px 0;
-    box-shadow:0 10px 30px rgba(0,0,0,.25)}
-  button{font-family:inherit;cursor:pointer;border:none;border-radius:14px;font-weight:700}
-  .btn-lg{font-size:18px;padding:18px 22px;width:100%;color:#fff;
-    background:linear-gradient(135deg,var(--accent),var(--accent2))}
-  .btn-lg:disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.3)}
-  .btn-ghost{background:#222c47;color:var(--ink);border:1px solid var(--line);font-size:15px;padding:14px 18px}
-  .row{display:flex;gap:12px;flex-wrap:wrap}
-  .row>*{flex:1;min-width:0}
-  input{font-family:inherit;font-size:18px;padding:14px 16px;border-radius:12px;border:1px solid var(--line);
+  button{font-family:inherit;cursor:pointer;border:none;border-radius:12px;font-weight:700}
+  input,textarea{font-family:inherit;font-size:16px;padding:13px 15px;border-radius:12px;border:1px solid var(--line);
     background:#0e1730;color:var(--ink);width:100%}
-  input::placeholder{color:#5e6c92}
-  .muted{color:var(--mut)}
-  .pill{display:inline-block;background:#0e1730;border:1px solid var(--line);border-radius:999px;
-    padding:6px 14px;font-weight:800;letter-spacing:3px;font-size:22px}
-  .code-big{font-size:44px;letter-spacing:8px;font-weight:900;color:#fff}
-  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-  .part-btn{background:#1b2440;border:1px solid var(--line);color:var(--mut);padding:10px 14px;border-radius:12px;font-size:14px}
-  .part-btn.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-color:transparent}
-  /* 프롬프트 무대 */
-  .stage{background:#0b1126;border:1px solid var(--line);border-radius:16px;padding:20px;min-height:120px}
-  .grow-line{font-size:19px;line-height:1.55;padding:10px 12px;border-radius:10px;margin:6px 0;
-    display:flex;gap:8px;align-items:flex-start}
-  .grow-line.base{font-weight:800;background:#13203f}
-  .grow-line .plus{color:var(--accent);font-weight:900}
-  .grow-line.new{animation:slidein .5s ease;background:rgba(51,214,159,.14);outline:1px solid rgba(51,214,159,.5)}
-  @keyframes slidein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-  .st-student .grow-line{font-size:22px}
-  .meta{display:flex;justify-content:space-between;align-items:center;margin:10px 2px;color:var(--mut);font-size:14px}
-  .big-num{font-size:18px;font-weight:900;color:var(--good)}
-  .controls{display:flex;gap:10px;margin-top:16px}
-  .controls .btn-lg{flex:2}
-  .controls .btn-ghost{flex:1}
-  .hint{color:var(--warn);font-size:13px;margin-top:8px;min-height:18px}
-  .qr{background:#fff;border-radius:12px;padding:8px;width:160px;height:160px}
-  .joinbox{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
-  .err{background:#3a1320;border:1px solid #6b2233;color:#ffb3c0;padding:12px 14px;border-radius:12px;font-size:14px;margin-top:12px}
+  input::placeholder,textarea::placeholder{color:#5e6c92}
+  textarea{resize:vertical;min-height:200px;line-height:1.7}
+  .muted{color:var(--mut)} .small{font-size:13px}
+  .btn-lg{font-size:17px;padding:15px 20px;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+  .btn-ghost{background:#222c47;color:var(--ink);border:1px solid var(--line);font-size:15px;padding:14px 18px}
+  .btn-danger{background:#2a1620;color:var(--danger);border:1px solid #5a2333;font-size:14px;padding:12px 16px}
+  .err{background:#3a1320;border:1px solid #6b2233;color:#ffb3c0;padding:12px 14px;border-radius:12px;font-size:14px;margin-bottom:12px}
   .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#0b1126;border:1px solid var(--line);
     color:#fff;padding:12px 20px;border-radius:999px;font-weight:700;display:none;z-index:50}
-  .footer-link{margin-top:30px;text-align:center}
-  .footer-link a{color:var(--mut);font-size:13px;text-decoration:none;border-bottom:1px dotted var(--mut)}
-  a.copy-cur{display:block;text-align:center;margin-top:16px}
-  .saved-row{display:flex;gap:8px;margin:8px 0;align-items:stretch}
-  .saved-open{flex:1;text-align:left;background:#1b2440;border:1px solid var(--line);color:var(--ink);
-    padding:14px 16px;border-radius:12px;font-size:16px;font-weight:700}
-  .saved-open .muted{font-weight:500;letter-spacing:2px}
-  .saved-del{flex:0 0 auto;width:48px;background:#241622;border:1px solid #4a2330;color:#ffb3c0;border-radius:12px;font-size:16px}
+
+  /* ===== 작업실(사이드바+에디터) ===== */
+  .workspace{display:flex;gap:18px;max-width:1080px;margin:0 auto;padding:20px 16px;min-height:100vh}
+  .sidebar{flex:0 0 260px;width:260px;display:flex;flex-direction:column;gap:12px}
+  .brand{font-size:20px;font-weight:900;margin:4px 2px 8px}
+  .btn-new{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:14px;font-size:15px}
+  .proj-list{display:flex;flex-direction:column;gap:8px;flex:1;overflow:auto}
+  .proj-item{display:flex;align-items:center;gap:6px}
+  .proj-open{flex:1;text-align:left;background:#1b2440;border:1px solid var(--line);color:var(--ink);
+    padding:13px 14px;border-radius:11px;font-size:15px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .proj-open.active{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent}
+  .proj-open .cnt{font-weight:500;color:var(--mut);font-size:13px}
+  .proj-open.active .cnt{color:#dbe4ff}
+  .side-join{border-top:1px solid var(--line);padding-top:12px}
+  .side-join .row{display:flex;gap:6px;margin-top:6px}
+  .editor{flex:1;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;min-width:0}
+  .lbl{display:block;font-weight:700;margin:16px 0 7px;font-size:14px}
+  .lbl:first-of-type{margin-top:0}
+  .editor-actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+  .editor-actions .btn-lg{flex:1} .editor-actions .btn-ghost{flex:1}
+  .step-row{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px}
+  .step-num{flex:0 0 auto;width:28px;height:28px;margin-top:7px;border-radius:8px;background:#1b2440;border:1px solid var(--line);
+    color:var(--accent);font-weight:800;font-size:13px;display:inline-flex;align-items:center;justify-content:center}
+  .step-input{min-height:50px;line-height:1.5}
+  .step-del{flex:0 0 auto;width:38px;align-self:stretch;background:#241622;border:1px solid #4a2330;color:#ffb3c0;border-radius:10px;font-size:14px}
+  .bulk{background:#0e1730;border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:12px}
+  .bulk summary{cursor:pointer;font-size:14px;font-weight:700;color:var(--mut)}
+  .bulk textarea{margin-top:10px;min-height:90px}
+
+  /* ===== 수업 운영 ===== */
+  .run-wrap{max-width:820px;margin:0 auto;padding:20px 16px}
+  .link-btn{background:none;border:none;color:var(--mut);font-size:14px;padding:6px 0;text-decoration:underline}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin:14px 0}
+  .joinbox{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+  .qr{background:#fff;border-radius:12px;padding:8px;width:150px;height:150px}
+  .code-big{font-size:40px;letter-spacing:7px;font-weight:900;color:#fff}
+  .meta{display:flex;justify-content:space-between;align-items:center;margin:8px 2px;color:var(--mut);font-size:14px}
+  .preview{background:#0b1126;border:1px solid var(--line);border-radius:14px;padding:18px;min-height:90px}
+  .pv-line{font-size:17px;line-height:1.55;padding:7px 10px;margin:5px 0;border-radius:9px;white-space:pre-wrap}
+  .pv-line.base{font-weight:800;background:#13203f}
+  .pv-line.new{background:rgba(51,214,159,.14);outline:1px solid rgba(51,214,159,.45)}
+  .controls{display:flex;gap:10px;margin-top:16px}
+  .controls .btn-lg{flex:2} .controls .btn-ghost{flex:1}
   .roster{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
   .chip{background:#1b2440;border:1px solid var(--line);color:var(--mut);padding:6px 12px;border-radius:999px;font-size:14px;font-weight:600}
-  .chip.done{background:rgba(51,214,159,.16);border-color:rgba(51,214,159,.5);color:#9ef0cf}
+
+  /* ===== 학생 — 이름 입력 ===== */
+  .center-wrap{max-width:520px;margin:0 auto;padding:40px 18px}
+  .pill{display:inline-block;background:#0e1730;border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-weight:800;letter-spacing:3px}
+
+  /* ===== 학생 — 화이트보드 ===== */
+  .wb-wrap{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#eef2f4}
+  .paper{position:relative;background:#d9ebec;color:#3a4048;width:100%;max-width:880px;min-height:64vh;
+    padding:64px 52px 72px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    box-shadow:0 18px 44px rgba(60,90,100,.22);
+    clip-path:polygon(0% 0%,100% 0%,100% 95%,96% 100%,91% 94.5%,86% 99.5%,81% 95%,76% 100%,71% 94.5%,66% 98.5%,
+      61% 95%,56% 100%,51% 94.5%,46% 99.5%,41% 95%,36% 100%,31% 94.5%,26% 98.5%,21% 95%,16% 100%,11% 94.5%,6% 99.5%,0% 95%)}
+  .paper-box{position:relative;width:100%;max-width:880px}
+  .washi{position:absolute;top:-16px;left:50%;transform:translateX(-50%) rotate(-4deg);width:236px;height:auto;
+    opacity:.82;z-index:2;filter:drop-shadow(0 2px 2px rgba(70,110,130,.18))}
+  .wb-copy{position:absolute;right:max(20px,4vw);bottom:max(18px,3vh);background:none;border:none;padding:6px;cursor:pointer}
+  .wb-copy:active{transform:scale(.92)}
+  .wb-page{width:100%;text-align:center}
+  .wb-wait{color:#7e96a0;font-size:18px}
+  .wb-line{font-size:26px;line-height:1.7;color:#2c333b;margin:14px 0;white-space:pre-wrap}
+  .wb-line.wb-base{font-weight:700}
+  .wb-page.flip{animation:pageturn .55s cubic-bezier(.2,.7,.3,1)}
+  @keyframes pageturn{
+    0%{opacity:.15;transform:perspective(1400px) rotateY(-36deg) translateX(46px);transform-origin:left center}
+    100%{opacity:1;transform:none}
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
+  <div id="loading" class="center-wrap"><p class="muted">연결 중…</p></div>
 
-  <!-- ===== 로딩 ===== -->
-  <div id="loading" class="card"><p class="muted">연결 중…</p></div>
-
-  <!-- ===== 1. 역할 선택 ===== -->
-  <div id="home" class="hidden">
-    <h1>📋 프롬프트 가이드</h1>
-    <p class="sub">선생님이 프롬프트를 한 줄씩 공개하면, 학생 화면에 실시간으로 따라 나타납니다.</p>
-    <div class="card">
-      <p style="margin:0 0 10px;font-weight:700">➕ 새 수업 보드 만들기</p>
-      <div class="row">
-        <input id="boardName" placeholder="보드 이름 (예: 6/19 1반)" maxlength="30" />
-        <button id="createBtn" class="btn-lg" style="flex:0 0 auto;padding:14px 28px">만들기</button>
+  <!-- ===== 강사 작업실 ===== -->
+  <div id="workspace" class="workspace hidden">
+    <aside class="sidebar">
+      <div class="brand">📋 프롬프트 가이드</div>
+      <button id="newBtn" class="btn-new">➕ 새 프로젝트</button>
+      <div id="projList" class="proj-list"></div>
+    </aside>
+    <main class="editor">
+      <div id="editorErr" class="err hidden"></div>
+      <label class="lbl">프로젝트 이름</label>
+      <input id="projName" placeholder="예: 이름 뽑기 만들기" maxlength="40" />
+      <label class="lbl">프롬프트 단계 — 단계마다 한 페이지 (한 단계 안엔 여러 줄 OK)</label>
+      <details id="bulkBox" class="bulk">
+        <summary>📋 표·목록 한 번에 붙여넣기</summary>
+        <textarea id="bulkInput" rows="4" placeholder="엑셀 표나 목록을 여기에 붙여넣으세요.&#10;한 줄(행)이 한 단계가 됩니다 → 행 수만큼 자동으로 칸이 생겨요."></textarea>
+        <button id="bulkApply" class="btn-ghost" style="width:100%;margin-top:6px">↓ 단계로 만들기</button>
+      </details>
+      <div id="stepList"></div>
+      <button id="addStepBtn" class="btn-ghost" style="width:100%;margin-top:8px">➕ 단계 추가</button>
+      <div class="editor-actions">
+        <button id="saveBtn" class="btn-lg">💾 저장</button>
+        <button id="startBtn" class="btn-ghost">▶ 수업 시작</button>
+        <button id="delBtn" class="btn-danger hidden">🗑 삭제</button>
       </div>
-    </div>
-    <div class="card hidden" id="savedCard">
-      <p style="margin:0 0 10px;font-weight:700">📂 저장된 보드 — 눌러서 다시 사용</p>
-      <div id="savedList"></div>
-    </div>
-    <div class="card">
-      <p style="margin:0 0 10px;font-weight:700">🧑‍🎓 학생이라면 — 코드 입력</p>
-      <div class="row">
-        <input id="joinCode" placeholder="예: ABCD12" maxlength="6" style="text-transform:uppercase" />
-        <button id="goStudent" class="btn-ghost" style="flex:0 0 auto;padding:14px 24px">참여</button>
-      </div>
-    </div>
-    <div id="homeErr" class="err hidden"></div>
+      <p class="muted small">💡 저장하면 왼쪽 목록에 추가돼요. 다음에 다시 불러와 쓸 수 있어요. "수업 시작"을 누르면 학생 공유 링크가 만들어집니다.</p>
+    </main>
   </div>
 
-  <!-- ===== 2. 선생님 ===== -->
-  <div id="teacher" class="hidden">
-    <h1 id="tHeading">👩‍🏫 선생님 화면</h1>
+  <!-- ===== 수업 운영 ===== -->
+  <div id="run" class="run-wrap hidden">
+    <button id="backWs" class="link-btn">← 작업실로 돌아가기</button>
+    <h1 id="runTitle" style="margin:6px 0 0">수업</h1>
     <div class="card">
       <div class="joinbox">
         <img id="qr" class="qr" alt="QR" />
         <div style="flex:1;min-width:200px">
           <p class="muted" style="margin:0 0 6px">학생 입장 코드</p>
           <div class="code-big" id="codeBig">––––––</div>
-          <div class="row" style="margin-top:12px">
-            <button id="copyLink" class="btn-ghost">🔗 링크 복사</button>
-            <a id="openStudent" class="btn-ghost" style="text-align:center;text-decoration:none;line-height:1.4" target="_blank">학생 화면 열기 ↗</a>
-          </div>
+          <p class="muted small" style="margin:12px 0 4px">👇 이 링크를 패들렛에 붙여 학생에게 공유하세요</p>
+          <input id="joinUrl" readonly style="font-size:13px;cursor:text" onclick="this.select()" />
+          <button id="copyLink" class="btn-ghost" style="margin-top:8px;width:100%">🔗 학생 링크 복사</button>
         </div>
       </div>
     </div>
-
     <div class="card">
-      <div class="tabs" id="partTabs"></div>
       <div class="meta">
-        <span id="stageTitle">파트를 선택하세요</span>
-        <span><span class="big-num" id="progress"></span></span>
+        <span style="font-weight:800">학생에게 보이는 페이지</span>
+        <span class="code-big" id="pageNo" style="font-size:20px">1 / 1</span>
       </div>
-      <div class="stage stage-teacher" id="stageT">
-        <p class="muted">위에서 파트를 고르면 학생 화면에 기본 프롬프트가 뜹니다.</p>
+      <div class="preview" id="preview"></div>
+      <div class="controls">
+        <button id="nextBtn" class="btn-lg">다음 페이지 ▶</button>
+        <button id="prevBtn" class="btn-ghost">◀ 이전</button>
       </div>
-      <div class="hint" id="hint"></div>
-      <div class="controls" id="controls" style="visibility:hidden">
-        <button id="growBtn" class="btn-lg">다음 살 붙이기 ▶</button>
-        <button id="shrinkBtn" class="btn-ghost">◀ 한 줄 되돌리기</button>
-      </div>
-      <div class="meta" style="margin-top:14px">
-        <span class="muted">접속 학생 <b id="ptCount">0</b>명</span>
-        <span class="muted">따라옴 <b class="big-num" id="ackCount">0</b>명</span>
-      </div>
+      <div class="meta" style="margin-top:14px"><span class="muted">접속 학생 <b id="ptCount">0</b>명</span></div>
       <div id="roster" class="roster"></div>
     </div>
-    <div id="tErr" class="err hidden"></div>
   </div>
 
-  <!-- ===== 3a. 학생 — 이름 입력 ===== -->
-  <div id="sJoin" class="hidden">
+  <!-- ===== 학생 — 이름 입력 ===== -->
+  <div id="sJoin" class="center-wrap hidden">
     <h1>🧑‍🎓 입장하기</h1>
-    <p class="sub">참여 코드 <span class="pill" id="sJoinCode" style="font-size:16px"></span></p>
+    <p class="muted">참여 코드 <span class="pill" id="sJoinCode"></span></p>
     <div class="card">
       <p style="margin:0 0 10px;font-weight:700">이름을 입력하고 입장하세요</p>
       <input id="sName" placeholder="이름 (예: 김민수)" maxlength="20" />
-      <div class="row" style="margin-top:12px">
-        <button id="sEnterNamed" class="btn-lg">입장</button>
-        <button id="sEnterAnon" class="btn-ghost" style="flex:0 0 auto;padding:14px 20px">익명으로 입장</button>
+      <div style="display:flex;gap:10px;margin-top:12px">
+        <button id="sEnterNamed" class="btn-lg" style="flex:1">입장</button>
+        <button id="sEnterAnon" class="btn-ghost" style="flex:0 0 auto">익명으로</button>
       </div>
     </div>
     <div id="sJoinErr" class="err hidden"></div>
   </div>
 
-  <!-- ===== 3b. 학생 — 보드 ===== -->
-  <div id="student" class="hidden">
-    <div class="meta">
-      <span class="muted">참여 코드 <span class="pill" id="sCode" style="font-size:16px"></span></span>
-      <span class="muted" id="sProgress"></span>
-    </div>
-    <div class="card">
-      <div class="meta"><span id="sTitle" style="font-weight:800">대기 중…</span></div>
-      <div class="stage stage-student stStudent" id="stageS">
-        <p class="muted">선생님이 시작하면 여기에 프롬프트가 나타납니다.</p>
+  <!-- ===== 학생 — 종이 메모 ===== -->
+  <div id="student" class="wb-wrap hidden">
+    <div class="paper-box">
+      <div class="paper">
+        <div class="wb-page" id="stageS"><p class="wb-wait">선생님이 시작하기를 기다리고 있어요…</p></div>
       </div>
-      <a class="copy-cur"><button id="copyCur" class="btn-lg">📋 지금 프롬프트 복사</button></a>
-      <button id="ackBtn" class="btn-ghost" style="width:100%;margin-top:10px">✅ 여기까지 따라왔어요</button>
+      <svg class="washi" viewBox="0 0 240 56" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <pattern id="gingham" width="14" height="14" patternUnits="userSpaceOnUse">
+            <rect width="14" height="14" fill="#cfe6f1"/>
+            <rect width="7" height="14" fill="#9cc6e0"/>
+            <rect width="14" height="7" fill="#9cc6e0"/>
+            <rect width="7" height="7" fill="#6aa6cf"/>
+          </pattern>
+        </defs>
+        <path d="M14,6 L226,6 L234,11 L226,17 L234,23 L226,29 L234,35 L226,41 L234,47 L226,50 L14,50 L6,45 L14,39 L6,33 L14,27 L6,21 L14,15 L6,9 Z" fill="url(#gingham)"/>
+      </svg>
     </div>
-    <div id="sErr" class="err hidden"></div>
+    <button id="copyCur" class="wb-copy" title="프롬프트 복사" style="display:none">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#2a2f38" stroke-width="1.6">
+        <rect x="8.5" y="8.5" width="11" height="11" rx="2.5"/><rect x="4.5" y="4.5" width="11" height="11" rx="2.5" fill="#fff"/>
+      </svg>
+    </button>
   </div>
 
-  <div class="footer-link"><a href="?">↺ 처음 화면으로</a></div>
-</div>
-<div id="toast" class="toast"></div>
+  <div id="toast" class="toast"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInAnonymously, onAuthStateChanged }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getDatabase, ref, set, get, update, remove, onValue, onDisconnect, serverTimestamp }
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getDatabase, ref, set, get, update, onValue, onDisconnect, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-// ── 라이브폴과 같은 Firebase 프로젝트 재사용 (공개되어도 되는 값) ──
+// 라이브폴과 같은 Firebase 프로젝트 재사용 (공개되어도 되는 값, 보안은 규칙으로)
 const firebaseConfig = {
   apiKey: "AIzaSyDxobMcpnBAMlcLeSILBR2k4sGoKxASk30",
   authDomain: "live-poll-c643b.firebaseapp.com",
@@ -197,53 +220,6 @@ const firebaseConfig = {
   appId: "1:445248033842:web:af51f031d206840281582b",
 };
 
-// ── 수업 프롬프트 데이터 ── base(기본) + adds(붙이는 살)
-const PARTS = [
-  {
-    id: "pick", title: "수업툴 · 이름 뽑기", emoji: "🎯",
-    base: "버튼을 누르면 우리 반 학생 중 한 명을 랜덤으로 뽑아주는 페이지 만들어줘.\nHTML 파일 하나로 만들어줘.",
-    adds: [
-      { label: "이름 입력", line: "학생 이름을 내가 직접 입력해서 추가하고 지울 수 있게 해줘." },
-      { label: "여러 명 붙여넣기", line: "이름을 한 명씩 말고, 여러 명을 한 번에 붙여넣어서 등록할 수 있게 해줘. 엑셀에서 복사한 것도 되게 해줘." },
-      { label: "두구두구 효과", line: "뽑을 때 이름들이 빠르게 휙휙 바뀌다가 멈추는 두구두구 효과를 넣어줘." },
-      { label: "중복 제외+목록", line: "한 번 뽑힌 학생은 다시 안 뽑히게 하고, 누가 뽑혔는지 목록으로 보여줘." },
-      { label: "예쁘게+TV용", line: "색깔이랑 글씨를 예쁘고 크게 해서, 교실 TV 화면에 띄워도 뒤에서 잘 보이게 해줘." },
-      { label: "초기화 버튼", line: "뽑힌 학생을 다시 후보로 되돌리는 '초기화' 버튼을 넣어줘." },
-    ],
-  },
-  {
-    id: "quiz", title: "게임 · OX 퀴즈", emoji: "🎮",
-    base: "O 또는 X로 답하는 퀴즈 웹페이지를 만들어줘.\n문제 하나를 보여주고, O 버튼과 X 버튼을 누르면 정답인지 알려줘.\nHTML 파일 하나로 만들어줘.",
-    adds: [
-      { label: "문제 여러 개", line: "문제를 여러 개 풀 수 있게 하고, 한 문제를 풀면 다음 문제로 넘어가게 해줘." },
-      { label: "점수 세기", line: "맞힌 개수를 점수로 세어서, 마지막엔 '몇 점 중 몇 점'처럼 결과를 보여줘." },
-      { label: "내 문제+색", line: "문제와 정답을 내가 직접 입력할 수 있게 하고, 정답이면 초록색, 틀리면 빨간색으로 표시해줘." },
-      { label: "효과+다시풀기", line: "정답을 맞히면 축하 효과(색종이나 이모지), 틀리면 화면이 살짝 흔들리게 하고, 끝나면 '다시 풀기' 버튼을 만들어줘." },
-    ],
-  },
-  {
-    id: "card", title: "수업양식 · 암기 카드", emoji: "🗂️",
-    base: "클릭하면 앞뒤가 뒤집히는 단어 카드 웹페이지를 만들어줘.\n앞면엔 단어, 뒷면엔 뜻이 나오게 해줘.\nHTML 파일 하나로 만들어줘.",
-    adds: [
-      { label: "여러 장+진도", line: "카드를 여러 장 만들어서 '다음' 버튼으로 넘기고, 지금 몇 번째인지(예: 3 / 10) 보여줘." },
-      { label: "내 내용 입력", line: "카드의 앞면(단어)과 뒷면(뜻)을 내가 직접 입력할 수 있게 해줘." },
-      { label: "부드러운 뒤집기", line: "카드를 예쁘게 꾸미고, 클릭하면 부드럽게 회전하며 뒤집히는 효과를 넣어줘." },
-      { label: "섞기+외움표시", line: "카드 순서를 섞는 '섞기' 버튼을 넣고, 다 외운 카드는 '외웠어요'로 표시해 몇 장 외웠는지 보여줘." },
-    ],
-  },
-];
-const PART_BY_ID = Object.fromEntries(PARTS.map(p => [p.id, p]));
-const segCount = p => 1 + p.adds.length;
-function linesFor(part, count){
-  const lines = [part.base];
-  for (let i = 0; i < count - 1 && i < part.adds.length; i++) lines.push(part.adds[i].line);
-  return lines;
-}
-function textFor(part, count){
-  const [base, ...extra] = linesFor(part, count);
-  return extra.length ? base + "\n" + extra.map(l => "- " + l).join("\n") : base;
-}
-
 // ── 유틸 ──
 const $ = id => document.getElementById(id);
 const show = id => $(id).classList.remove("hidden");
@@ -251,188 +227,272 @@ const hide = id => $(id).classList.add("hidden");
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
 let toastTimer;
 function toast(m){ const t=$("toast"); t.textContent=m; t.style.display="block"; clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.style.display="none",1700); }
+function fail(box,msg){ const e=$(box); e.textContent=msg; e.classList.remove("hidden"); }
 function makeCode(){ const c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; let s=""; for(let i=0;i<6;i++) s+=c[Math.floor(Math.random()*c.length)]; return s; }
+const stepsOf = txt => (txt||"").split("\n").map(s=>s.trim()).filter(Boolean);
+const normLines = v => Array.isArray(v) ? v : Object.values(v||{});
 
-// ── Firebase 부팅 ──
+// ── 효과음(책장 넘기기) ──
+let audioCtx = null;
+function ensureAudio(){ try{ audioCtx = audioCtx || new (window.AudioContext||window.webkitAudioContext)(); if(audioCtx.state==="suspended") audioCtx.resume(); }catch{} }
+function playFlip(){
+  if(!audioCtx) return;
+  try{
+    const ctx=audioCtx, dur=0.24, buf=ctx.createBuffer(1, Math.floor(ctx.sampleRate*dur), ctx.sampleRate), d=buf.getChannelData(0);
+    for(let i=0;i<d.length;i++){ const t=i/d.length; d[i]=(Math.random()*2-1)*(1-t)*(1-t); }
+    const src=ctx.createBufferSource(); src.buffer=buf;
+    const bp=ctx.createBiquadFilter(); bp.type="bandpass"; bp.frequency.value=2400; bp.Q.value=0.6;
+    const g=ctx.createGain(); g.gain.setValueAtTime(0.0001,ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.45,ctx.currentTime+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+dur);
+    src.connect(bp).connect(g).connect(ctx.destination); src.start();
+  }catch{}
+}
+function flip(el){ el.classList.remove("flip"); void el.offsetWidth; el.classList.add("flip"); }
+
+// ── 프로젝트 저장 (이 컴퓨터) ──
+function loadProjects(){ try{ return JSON.parse(localStorage.getItem("pg_projects")||"[]"); }catch{ return []; } }
+function saveProjects(a){ localStorage.setItem("pg_projects", JSON.stringify(a)); }
+function newId(){ return "p"+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+
+// ── Firebase ──
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 let uid = null;
 
-function fail(boxId, msg){ const e=$(boxId); e.textContent=msg; e.classList.remove("hidden"); }
-
-onAuthStateChanged(auth, u => { if (u){ uid = u.uid; route(); } });
-signInAnonymously(auth).catch(e => {
-  hide("loading"); show("home");
-  fail("homeErr", "로그인 실패: Firebase 콘솔에서 '익명 로그인'이 켜져 있는지, 이 주소가 승인된 도메인인지 확인하세요. (" + e.message + ")");
-});
+onAuthStateChanged(auth, u => { if(u){ uid=u.uid; route(); } });
+signInAnonymously(auth).catch(e => { hide("loading"); show("workspace"); renderProjects(); openEditor(null);
+  fail("editorErr","로그인 실패: Firebase 콘솔에서 '익명 로그인'이 켜져 있는지 확인하세요. ("+e.message+")"); });
 
 // ── 라우팅 ──
 function route(){
   hide("loading");
   const q = new URLSearchParams(location.search);
-  const board = (q.get("board") || "").toUpperCase();
-  if (q.get("role") === "student" && board) return startStudent(board);
-  show("home");
-  renderSaved();
-  $("createBtn").onclick = createBoard;
-  $("boardName").addEventListener("keydown", e => { if (e.key === "Enter") createBoard(); });
-  $("goStudent").onclick = () => {
-    const c = $("joinCode").value.trim().toUpperCase();
-    if (c.length < 4) return fail("homeErr", "코드를 다시 확인해주세요.");
-    location.search = "?role=student&board=" + c;
-  };
-  $("joinCode").addEventListener("keydown", e => { if (e.key === "Enter") $("goStudent").click(); });
+  const board = (q.get("board")||"").toUpperCase();
+  if (q.get("role")==="student" && board) return startStudent(board);
+  show("workspace");
+  renderProjects();
+  openEditor(null);
+  $("newBtn").onclick = () => openEditor(null);
+  $("addStepBtn").onclick = addStep;
+  $("bulkApply").onclick = () => bulkToSteps($("bulkInput").value);
+  $("bulkInput").addEventListener("paste", e => {
+    const rows = parsePasteRows(e);
+    if (rows.length > 1) { e.preventDefault(); applyRows(rows); $("bulkInput").value=""; $("bulkBox").open=false; }
+  });
+  // 단계칸에 여러 행을 붙여넣으면 자동으로 칸이 나뉨
+  $("stepList").addEventListener("paste", e => {
+    if (!e.target || !e.target.classList || !e.target.classList.contains("step-input")) return;
+    const rows = parsePasteRows(e);
+    if (rows.length > 1) { e.preventDefault(); applyRows(rows); }
+  });
+  $("saveBtn").onclick = saveProject;
+  $("startBtn").onclick = startClass;
+  $("delBtn").onclick = deleteProject;
 }
 
-// ── 저장된 보드 (이 컴퓨터에 저장) ──
-function loadBoards(){ try { return JSON.parse(localStorage.getItem("pg_boards") || "[]"); } catch { return []; } }
-function saveBoards(arr){ localStorage.setItem("pg_boards", JSON.stringify(arr)); }
-function renderSaved(){
-  const list = loadBoards();
-  if (!list.length){ hide("savedCard"); return; }
-  show("savedCard");
-  const box = $("savedList"); box.innerHTML = "";
-  list.slice().reverse().forEach(b => {
-    const row = document.createElement("div"); row.className = "saved-row";
-    const open = document.createElement("button"); open.className = "saved-open";
-    open.innerHTML = `${esc(b.name)} <span class="muted">· ${b.code}</span>`;
-    open.onclick = () => openTeacher(b.code, b.name);
-    const del = document.createElement("button"); del.className = "saved-del"; del.textContent = "✕"; del.title = "삭제";
-    del.onclick = () => { saveBoards(loadBoards().filter(x => x.code !== b.code)); renderSaved(); };
-    row.append(open, del); box.appendChild(row);
+// ════════ 작업실 ════════
+let editingId = null;
+
+// 프로젝트 단계 = 문자열 배열. (옛 문자열 포맷도 허용)
+const asSteps = v => Array.isArray(v) ? v.filter(s=>String(s).trim()) : stepsOf(v);
+
+function renderProjects(){
+  const list = loadProjects(), box = $("projList");
+  box.innerHTML = list.length ? "" : '<p class="muted small" style="padding:4px 2px">아직 저장된 프로젝트가 없어요.<br>오른쪽에서 만들어 저장해보세요.</p>';
+  list.forEach(p => {
+    const item = document.createElement("div"); item.className="proj-item";
+    const open = document.createElement("button");
+    open.className = "proj-open" + (p.id===editingId?" active":"");
+    open.innerHTML = `${esc(p.name||"이름 없음")} <span class="cnt">· ${asSteps(p.steps).length}단계</span>`;
+    open.onclick = () => openEditor(p.id);
+    item.appendChild(open); box.appendChild(item);
   });
 }
 
-// ════════ 선생님 ════════
-async function createBoard(){
-  const name = ($("boardName").value || "").trim() || "이름 없는 보드";
-  hide("home");
-  let code;
-  try {
-    for (let i=0;i<8;i++){ const c=makeCode(); const s=await get(ref(db,`boards/${c}/meta`));
-      if (s.exists()) continue; await set(ref(db,`boards/${c}/meta`),{hostId:uid,createdAt:serverTimestamp()}); code=c; break; }
-  } catch (e) {
-    show("home");
-    if (e.code === "PERMISSION_DENIED" || /permission/i.test(e.message))
-      return fail("homeErr","Firebase 보안 규칙이 아직 게시되지 않았어요. database.rules.json을 Firebase 콘솔 → Realtime Database → 규칙에 붙여넣고 '게시'하세요.");
-    return fail("homeErr","보드 생성 실패: " + e.message);
+// 단계 입력 칸 렌더 (각 칸 = 한 페이지, 여러 줄 가능)
+function getStepsFromDOM(){ return [...document.querySelectorAll('.step-input')].map(t=>t.value); }
+function renderSteps(steps){
+  const box = $("stepList"); box.innerHTML = "";
+  steps.forEach((s,i) => {
+    const row = document.createElement("div"); row.className = "step-row";
+    row.innerHTML = `<span class="step-num">${i+1}</span>`
+      + `<textarea class="step-input" rows="2" placeholder="${i===0?"첫 페이지에 보여줄 프롬프트":"이 페이지에서 추가로 보여줄 프롬프트"} (여러 줄 OK)"></textarea>`
+      + `<button class="step-del" title="이 단계 삭제">✕</button>`;
+    row.querySelector(".step-input").value = s;
+    row.querySelector(".step-del").onclick = () => {
+      const cur = getStepsFromDOM(); cur.splice(i,1); renderSteps(cur.length?cur:[""]);
+    };
+    box.appendChild(row);
+  });
+}
+function addStep(){
+  const cur = getStepsFromDOM(); cur.push(""); renderSteps(cur);
+  const ins = document.querySelectorAll('.step-input'); ins[ins.length-1].focus();
+}
+// 붙여넣기 → 행 배열로 파싱. 엑셀/시트면 HTML 표의 행 단위로(셀 안 줄바꿈 안전), 아니면 줄 단위로.
+function parsePasteRows(e){
+  const cb = e.clipboardData || window.clipboardData;
+  const html = cb.getData("text/html");
+  if (html && /<table/i.test(html)){
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return [...doc.querySelectorAll("tr")]
+      .map(tr => [...tr.querySelectorAll("td,th")].map(td=>(td.textContent||"").replace(/\s+/g," ").trim()).filter(Boolean).join(" ").trim())
+      .filter(Boolean);
   }
-  if (!code) return (show("home"), fail("homeErr","보드 생성 실패. 잠시 후 다시 시도해주세요."));
-  const list = loadBoards(); list.push({ code, name, ts: Date.now() }); saveBoards(list);
-  openTeacher(code, name);
+  return (cb.getData("text")||"").split(/\r?\n/).map(s=>s.replace(/\t+/g," ").trim()).filter(Boolean);
+}
+// 행 배열을 단계칸으로 (기존 입력 뒤에 추가)
+function applyRows(rows){
+  rows = rows.filter(Boolean);
+  if (!rows.length) return false;
+  const existing = getStepsFromDOM().map(s=>s.trim()).filter(Boolean);
+  renderSteps([...existing, ...rows]);
+  toast(`${rows.length}개 단계가 추가됐어요.`);
+  return true;
+}
+function bulkToSteps(txt){
+  const rows = (txt||"").split(/\r?\n/).map(s=>s.replace(/\t+/g," ").trim()).filter(Boolean);
+  if (!applyRows(rows)) return toast("붙여넣은 내용이 없어요.");
+  $("bulkInput").value = ""; $("bulkBox").open = false;
 }
 
-function openTeacher(code, name){
-  hide("home");
-  show("teacher");
-  $("tHeading").textContent = "👩‍🏫 " + (name || "선생님 화면");
+function openEditor(id){
+  editingId = id;
+  const p = loadProjects().find(x=>x.id===id);
+  $("editorErr").classList.add("hidden");
+  $("projName").value = p ? (p.name||"") : "";
+  const steps = p ? asSteps(p.steps) : [];
+  renderSteps(steps.length ? steps : [""]);
+  $("delBtn").classList.toggle("hidden", !p);
+  renderProjects();
+}
 
+function saveProject(){
+  const name = $("projName").value.trim();
+  const steps = getStepsFromDOM().map(s=>s.trim()).filter(Boolean);
+  if (!name) return fail("editorErr","프로젝트 이름을 입력해주세요.");
+  if (steps.length===0) return fail("editorErr","프롬프트 단계를 한 개 이상 입력해주세요.");
+  $("editorErr").classList.add("hidden");
+  const list = loadProjects();
+  let p = list.find(x=>x.id===editingId);
+  if (p){ p.name=name; p.steps=steps; }
+  else { p={ id:newId(), name, steps, code:null }; list.push(p); editingId=p.id; }
+  saveProjects(list); renderProjects();
+  $("delBtn").classList.remove("hidden");
+  toast("저장됐어요!");
+}
+
+function deleteProject(){
+  if (!editingId) return;
+  saveProjects(loadProjects().filter(x=>x.id!==editingId));
+  openEditor(null);
+  toast("삭제됐어요.");
+}
+
+// ════════ 수업 시작 ════════
+async function startClass(){
+  // 저장 먼저
+  const name=$("projName").value.trim();
+  if(!name || getStepsFromDOM().map(s=>s.trim()).filter(Boolean).length===0){ return fail("editorErr","이름과 프롬프트 단계를 입력하고 저장해주세요."); }
+  saveProject();
+  const project = loadProjects().find(x=>x.id===editingId);
+  const lines = asSteps(project.steps);
+
+  // 보드 확보(없거나 내 것이 아니면 새로 생성) → live에 프롬프트+1페이지 기록
+  let code = project.code;
+  try {
+    let ok = false;
+    if (code){ const m = await get(ref(db,`boards/${code}/meta`)); ok = m.exists() && m.val().hostId===uid; }
+    if (!ok){
+      for (let i=0;i<8;i++){ const c=makeCode(); const m=await get(ref(db,`boards/${c}/meta`));
+        if (m.exists()) continue; await set(ref(db,`boards/${c}/meta`),{hostId:uid,createdAt:serverTimestamp()}); code=c; break; }
+      project.code = code; const list=loadProjects(); const i=list.findIndex(x=>x.id===project.id); list[i]=project; saveProjects(list);
+    }
+    await set(ref(db,`boards/${code}/live`), { lines, count:1 });
+  } catch(e){
+    if (e.code==="PERMISSION_DENIED"||/permission/i.test(e.message))
+      return fail("editorErr","Firebase 보안 규칙이 아직 게시되지 않았어요. 콘솔에서 규칙을 게시해주세요.");
+    return fail("editorErr","수업 시작 실패: "+e.message);
+  }
+  openRun(project, code, lines);
+}
+
+function openRun(project, code, lines){
+  hide("workspace"); show("run");
+  $("runTitle").textContent = "▶ " + project.name;
   const url = location.origin + location.pathname + "?role=student&board=" + code;
   $("codeBig").textContent = code;
-  $("openStudent").href = url;
+  $("joinUrl").value = url;
   $("qr").src = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(url);
   $("copyLink").onclick = async () => { try{ await navigator.clipboard.writeText(url);}catch{} toast("학생 링크가 복사됐어요!"); };
+  $("backWs").onclick = () => { hide("run"); show("workspace"); renderProjects(); };
 
-  // 파트 탭
-  const tabs = $("partTabs"); tabs.innerHTML="";
-  PARTS.forEach(p => { const b=document.createElement("button"); b.className="part-btn"; b.dataset.part=p.id;
-    b.textContent = `${p.emoji} ${p.title}`; b.onclick = () => set(ref(db,`boards/${code}/live`),{part:p.id,count:1}); tabs.appendChild(b); });
+  let count = 1; const total = lines.length;
+  const liveRef = ref(db,`boards/${code}/live`);
+  $("nextBtn").onclick = () => { if(count>=total) return; count++; update(liveRef,{count}); };
+  $("prevBtn").onclick = () => { if(count<=1) return; count--; update(liveRef,{count}); };
 
-  let live = null, acks = {}, people = {};   // people = { uid: {name, ts} }
-  $("growBtn").onclick = () => { if(!live) return; const part=PART_BY_ID[live.part];
-    if (live.count >= segCount(part)) return; update(ref(db,`boards/${code}/live`),{count:live.count+1}); };
-  $("shrinkBtn").onclick = () => { if(!live||live.count<=1) return; update(ref(db,`boards/${code}/live`),{count:live.count-1}); };
-
-  onValue(ref(db,`boards/${code}/live`), s => { live = s.val()||null; renderT(); renderRoster(); });
-  onValue(ref(db,`boards/${code}/participants`), s => { people = s.val()||{}; renderRoster(); });
-  onValue(ref(db,`boards/${code}/done`), s => { acks = s.val()||{}; renderRoster(); });
-
-  function renderT(){
-    document.querySelectorAll(".part-btn").forEach(b => b.classList.toggle("active", live && b.dataset.part===live.part));
-    if (!live){ $("stageTitle").textContent="파트를 선택하세요"; $("progress").textContent=""; $("hint").textContent="";
-      $("controls").style.visibility="hidden"; $("stageT").innerHTML='<p class="muted">위에서 파트를 고르면 학생 화면에 기본 프롬프트가 뜹니다.</p>'; return; }
-    $("controls").style.visibility="visible";
-    const part=PART_BY_ID[live.part], total=segCount(part);
-    $("stageTitle").textContent=`${part.emoji} ${part.title}`; $("progress").textContent=`${live.count} / ${total}`;
-    $("stageT").innerHTML = renderLines(part, live.count);
-    $("shrinkBtn").disabled = live.count<=1;
-    const end = live.count>=total; $("growBtn").disabled=end;
-    if (end){ $("growBtn").textContent="완성! 🎉"; $("hint").textContent="완성형까지 다 붙였어요."; }
-    else { const nx=part.adds[live.count-1]; $("growBtn").textContent=`다음 살 붙이기 ▶  +${nx.label}`; $("hint").textContent=`다음에 붙을 살: ${nx.label}`; }
-  }
-  function renderRoster(){
-    const ids = Object.keys(people);
+  onValue(liveRef, s => { const L=s.val(); if(L && L.count){ count=L.count; } renderRun(lines, count, total); });
+  onValue(ref(db,`boards/${code}/participants`), s => {
+    const people = s.val()||{}; const ids=Object.keys(people);
     $("ptCount").textContent = ids.length;
-    const key = live ? `${live.part}:${live.count}` : null;
-    let followed = 0;
-    $("roster").innerHTML = ids.length
-      ? ids.map(u => {
-          const nm = esc(people[u].name || "익명");
-          const done = key && acks[u] === key;
-          if (done) followed++;
-          return `<span class="chip${done?" done":""}">${done?"✓ ":""}${nm}</span>`;
-        }).join("")
+    $("roster").innerHTML = ids.length ? ids.map(u=>`<span class="chip">${esc(people[u].name||"익명")}</span>`).join("")
       : '<span class="muted">아직 입장한 학생이 없어요.</span>';
-    $("ackCount").textContent = followed;
-  }
+  });
+}
+
+function renderRun(lines, count, total){
+  $("pageNo").textContent = `${count} / ${total}`;
+  $("preview").innerHTML = `<div class="pv-line base">${esc(lines[count-1]||"")}</div>`;
+  $("nextBtn").disabled = count>=total;
+  $("prevBtn").disabled = count<=1;
+  $("nextBtn").textContent = count>=total ? "마지막 페이지 ✓" : "다음 페이지 ▶";
 }
 
 // ════════ 학생 — 이름 입력 ════════
 async function startStudent(code){
-  hide("home"); show("sJoin");
+  hide("workspace"); show("sJoin");
   $("sJoinCode").textContent = code;
   try {
-    const meta = await get(ref(db, `boards/${code}/meta`));
-    if (!meta.exists()) return fail("sJoinErr","그런 코드의 보드가 없어요. 코드를 다시 확인해주세요.");
-  } catch (e) {
-    if (e.code === "PERMISSION_DENIED" || /permission/i.test(e.message))
-      return fail("sJoinErr","아직 준비 중인 보드예요. 선생님께 알려주세요. (Firebase 규칙 미게시)");
-    return fail("sJoinErr","입장 확인 실패: " + e.message);
+    const m = await get(ref(db,`boards/${code}/meta`));
+    if (!m.exists()) return fail("sJoinErr","그런 코드의 보드가 없어요. 코드를 다시 확인해주세요.");
+  } catch(e){
+    if (e.code==="PERMISSION_DENIED"||/permission/i.test(e.message)) return fail("sJoinErr","아직 준비 중인 보드예요. 선생님께 알려주세요.");
+    return fail("sJoinErr","입장 확인 실패: "+e.message);
   }
-  $("sEnterNamed").onclick = () => enterStudent(code, ($("sName").value || "").trim() || "익명");
+  $("sEnterNamed").onclick = () => enterStudent(code, ($("sName").value||"").trim() || "익명");
   $("sEnterAnon").onclick  = () => enterStudent(code, "익명");
-  $("sName").addEventListener("keydown", e => { if (e.key === "Enter") $("sEnterNamed").click(); });
+  $("sName").addEventListener("keydown", e=>{ if(e.key==="Enter") $("sEnterNamed").click(); });
 }
 
-// ════════ 학생 — 입장 ════════
+// ════════ 학생 — 화이트보드 ════════
 async function enterStudent(code, name){
   hide("sJoin"); show("student");
-  $("sCode").textContent = code;
-
-  // 접속 등록(이름 포함) + 나가면 자동 제거
-  const meRef = ref(db, `boards/${code}/participants/${uid}`);
-  await set(meRef, { name, ts: serverTimestamp() });
+  ensureAudio();
+  const meRef = ref(db,`boards/${code}/participants/${uid}`);
+  await set(meRef, { name, ts:serverTimestamp() });
   onDisconnect(meRef).remove();
 
-  let live = null;
-  onValue(ref(db, `boards/${code}/live`), s => { live = s.val()||null; renderS(); });
+  let prevCount = 0, curText = "";
+  onValue(ref(db,`boards/${code}/live`), s => {
+    const L = s.val(); const stage=$("stageS");
+    if (!L || !L.count){ prevCount=0; curText=""; $("copyCur").style.display="none";
+      stage.innerHTML='<p class="wb-wait">선생님이 시작하기를 기다리고 있어요…</p>'; return; }
+    const all = normLines(L.lines);
+    curText = all[L.count-1] || "";                 // 현재 페이지(단계) 것만
+    stage.innerHTML = `<p class="wb-line${L.count===1?" wb-base":""}">${esc(curText)}</p>`;
+    $("copyCur").style.display="";
+    if (prevCount!==0 && prevCount!==L.count){ flip(stage); playFlip(); }
+    prevCount = L.count;
+  });
 
   $("copyCur").onclick = async () => {
-    if (!live) return toast("아직 시작 전이에요.");
-    const part=PART_BY_ID[live.part];
-    try{ await navigator.clipboard.writeText(textFor(part, live.count)); toast("복사 완료! AI에 붙여넣으세요."); }
+    if (!curText) return toast("아직 시작 전이에요.");
+    try{ await navigator.clipboard.writeText(curText); toast("복사 완료! AI에 붙여넣으세요."); }
     catch{ toast("복사 실패 — 길게 눌러 직접 복사해주세요."); }
   };
-  $("ackBtn").onclick = () => { if(!live) return; set(ref(db,`boards/${code}/done/${uid}`), `${live.part}:${live.count}`); toast("따라왔어요! 선생님 화면에 표시됩니다 ✅"); };
-
-  function renderS(){
-    if (!live){ $("sTitle").textContent="대기 중…"; $("sProgress").textContent="";
-      $("stageS").innerHTML='<p class="muted">선생님이 시작하면 여기에 프롬프트가 나타납니다.</p>'; return; }
-    const part=PART_BY_ID[live.part], total=segCount(part);
-    $("sTitle").textContent=`${part.emoji} ${part.title}`; $("sProgress").textContent=`${live.count} / ${total}`;
-    $("stageS").innerHTML = renderLines(part, live.count);
-  }
-}
-
-// 공통: 줄 렌더 (마지막에 붙은 살 강조)
-function renderLines(part, count){
-  const lines = linesFor(part, count);
-  return lines.map((l,i) => {
-    const isNew = i===lines.length-1 && i>0;
-    const cls = "grow-line" + (i===0?" base":"") + (isNew?" new":"");
-    return `<div class="${cls}">${i===0?"":"<span class='plus'>+</span>"}<span>${esc(l)}</span></div>`;
-  }).join("");
 }
 </script>
 </body>
